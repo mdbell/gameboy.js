@@ -4,12 +4,13 @@ var GameboyJS;
 
 // Screen device
     class Screen {
+        static physics = {
+            WIDTH    : 160,
+            HEIGHT   : 144,
+            FREQUENCY: 60
+        };
         constructor(canvas, pixelSize) {
-            this.physics = {
-                WIDTH    : 160,
-                HEIGHT   : 144,
-                FREQUENCY: 60
-            };
+
         }
         setPixelSize(pixelSize) {
             //stubbed
