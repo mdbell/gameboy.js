@@ -1,30 +1,3 @@
-function loadboot(p) {
-    var boot = [
-        0x31, 0xFE, 0xFF, 0xAF, 0x21, 0xFF, 0x9F, 0x32, 0xCB, 0x7C, 0x20, 0xFB, 0x21, 0x26, 0xFF, 0x0E,
-        0x11, 0x3E, 0x80, 0x32, 0xE2, 0x0C, 0x3E, 0xF3, 0xE2, 0x32, 0x3E, 0x77, 0x77, 0x3E, 0xFC, 0xE0,
-        0x47, 0x11, 0x04, 0x01, 0x21, 0x10, 0x80, 0x1A, 0xCD, 0x95, 0x00, 0xCD, 0x96, 0x00, 0x13, 0x7B,
-        0xFE, 0x34, 0x20, 0xF3, 0x11, 0xD8, 0x00, 0x06, 0x08, 0x1A, 0x13, 0x22, 0x23, 0x05, 0x20, 0xF9,
-        0x3E, 0x19, 0xEA, 0x10, 0x99, 0x21, 0x2F, 0x99, 0x0E, 0x0C, 0x3D, 0x28, 0x08, 0x32, 0x0D, 0x20,
-        0xF9, 0x2E, 0x0F, 0x18, 0xF3, 0x67, 0x3E, 0x64, 0x57, 0xE0, 0x42, 0x3E, 0x91, 0xE0, 0x40, 0x04,
-        0x1E, 0x02, 0x0E, 0x0C, 0xF0, 0x44, 0xFE, 0x90, 0x20, 0xFA, 0x0D, 0x20, 0xF7, 0x1D, 0x20, 0xF2,
-        0x0E, 0x13, 0x24, 0x7C, 0x1E, 0x83, 0xFE, 0x62, 0x28, 0x06, 0x1E, 0xC1, 0xFE, 0x64, 0x20, 0x06,
-        0x7B, 0xE2, 0x0C, 0x3E, 0x87, 0xE2, 0xF0, 0x42, 0x90, 0xE0, 0x42, 0x15, 0x20, 0xD2, 0x05, 0x20,
-        0x4F, 0x16, 0x20, 0x18, 0xCB, 0x4F, 0x06, 0x04, 0xC5, 0xCB, 0x11, 0x17, 0xC1, 0xCB, 0x11, 0x17,
-        0x05, 0x20, 0xF5, 0x22, 0x23, 0x22, 0x23, 0xC9, 0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B,
-        0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D, 0x00, 0x08, 0x11, 0x1F, 0x88, 0x89, 0x00, 0x0E,
-        0xDC, 0xCC, 0x6E, 0xE6, 0xDD, 0xDD, 0xD9, 0x99, 0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC,
-        0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E, 0x3C, 0x42, 0xB9, 0xA5, 0xB9, 0xA5, 0x42, 0x3C,
-        0x21, 0x04, 0x01, 0x11, 0xA8, 0x00, 0x1A, 0x13, 0xBE, 0x00, 0x00, 0x23, 0x7D, 0xFE, 0x34, 0x20,
-        0xF5, 0x06, 0x19, 0x78, 0x86, 0x23, 0x05, 0x20, 0xFB, 0x86, 0x00, 0x00, 0x3E, 0x01, 0xE0, 0x50
-    ];
-
-    for (var i in boot) {
-        p.memory[i] = boot[i];
-    }
-    p.r.pc = 0;
-    p.usingBootRom = true;
-}
-
 var GameboyJS;
 (function (GameboyJS) {
 "use strict";
@@ -725,64 +698,39 @@ var GameboyJS;
 (function (GameboyJS) {
 "use strict";
 
-// Screen device
-var Screen = function(canvas, pixelSize) {
-    this.context = canvas.getContext('2d');
-    this.canvas = canvas;
-    this.pixelSize = pixelSize || 1;
-    this.initImageData();
-};
-
-Screen.colors = [
-    0xFF,
-    0xAA,
-    0x55,
-    0x00
-];
-
 Screen.physics = {
     WIDTH    : 160,
     HEIGHT   : 144,
     FREQUENCY: 60
 };
 
-Screen.prototype.setPixelSize = function(pixelSize) {
-    this.pixelSize = pixelSize;
-    this.initImageData();
+// Screen device
+var Screen = function(canvas, pixelSize) {
+
+};
+
+Screen.prototype.setPixelSize = function(pixelSize){
+    //stubbed
 };
 
 Screen.prototype.initImageData = function() {
-    this.canvas.width = Screen.physics.WIDTH * this.pixelSize;
-    this.canvas.height = Screen.physics.HEIGHT * this.pixelSize;
-    this.imageData = this.context.createImageData(this.canvas.width, this.canvas.height);
+
 };
 
 Screen.prototype.clearScreen = function() {
-    this.context.fillStyle = '#FFF';
-    this.context.fillRect(0, 0, Screen.physics.WIDTH * this.pixelSize, Screen.physics.HEIGHT * this.pixelSize);
+
 };
 
 Screen.prototype.fillImageData = function(buffer) {
     for (var y = 0; y < Screen.physics.HEIGHT; y++) {
-        for (var py = 0; py < this.pixelSize; py++) {
-            var _y = y * this.pixelSize + py;
-            for (var x = 0; x < Screen.physics.WIDTH; x++) {
-                for (var px = 0; px < this.pixelSize; px++) {
-                    var offset = _y * this.canvas.width + (x * this.pixelSize + px);
-                    var v = Screen.colors[buffer[y * Screen.physics.WIDTH + x]];
-                    this.imageData.data[offset * 4] = v;
-                    this.imageData.data[offset * 4 + 1] = v;
-                    this.imageData.data[offset * 4 + 2] = v;
-                    this.imageData.data[offset * 4 + 3] = 255;
-                }
-            }
+        for(var x = 0; x < Screen.physics.WIDTH; x++){
+            //buffer[y * Screen.physics.WIDTH + x]
         }
     }
 };
 
 Screen.prototype.render = function(buffer) {
-    this.fillImageData(buffer);
-    this.context.putImageData(this.imageData, 0, 0);
+
 };
 
 GameboyJS.Screen = Screen;
@@ -2281,17 +2229,24 @@ var RomDropFileReader = function(el) {
     var self = this;
     this.dropElement.addEventListener('dragenter', function(e) {
         e.preventDefault();
-        e.target.classList.add('drag-active');
+        if (e.target !== self.dropElement) {
+          return;
+        }
+        self.dropElement.classList.add('drag-active');
     });
     this.dropElement.addEventListener('dragleave', function(e) {
         e.preventDefault();
-        e.target.classList.remove('drag-active');
+        if (e.target !== self.dropElement) {
+          return;
+        }
+        self.dropElement.classList.remove('drag-active');
     });
     this.dropElement.addEventListener('dragover', function(e) {
         e.preventDefault();
+        self.dropElement.classList.add('drag-active');
     });
     this.dropElement.addEventListener('drop', function (e) {
-        e.target.classList.remove('drag-active');
+        self.dropElement.classList.remove('drag-active');
         if (e.dataTransfer.files.length == 0) {
             return;
         }
@@ -2463,7 +2418,7 @@ var APU = function(memory) {
     this.memory = memory;
     this.enabled = false;
 
-    AudioContext = window.AudioContext || window.webkitAudioContext;
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioContext = new AudioContext();
 
     this.channel1 = new GameboyJS.Channel1(this, 1, audioContext);

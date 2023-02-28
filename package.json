@@ -2,6 +2,9 @@
     "name": "gameboy-js",
     "author": "Julien Chichignoud",
     "description": "JavaScript Gameboy emulator",
+    "scripts": {
+        "build": "npx grunt"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/juchi/gameboy.js"
