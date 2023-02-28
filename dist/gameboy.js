@@ -706,7 +706,7 @@ Screen.physics = {
 
 // Screen device
 var Screen = function(canvas, pixelSize) {
-
+    console.log("stubbed");
 };
 
 Screen.prototype.setPixelSize = function(pixelSize){
