@@ -699,40 +699,31 @@ var GameboyJS;
 "use strict";
 
 // Screen device
-var Screen = function(canvas, pixelSize) {
-    //stubbed
-};
-
-Screen.physics = {
-    WIDTH    : 160,
-    HEIGHT   : 144,
-    FREQUENCY: 60
-};
-
-Screen.prototype.setPixelSize = function(pixelSize){
-    //stubbed
-};
-
-Screen.prototype.initImageData = function() {
-
-};
-
-Screen.prototype.clearScreen = function() {
-
-};
-
-Screen.prototype.fillImageData = function(buffer) {
-    for (var y = 0; y < Screen.physics.HEIGHT; y++) {
-        for(var x = 0; x < Screen.physics.WIDTH; x++){
-            //buffer[y * Screen.physics.WIDTH + x]
+    class Screen {
+        constructor(canvas, pixelSize) {
+            this.physics = {
+                WIDTH    : 160,
+                HEIGHT   : 144,
+                FREQUENCY: 60
+            };
+        }
+        setPixelSize(pixelSize) {
+            //stubbed
+        }
+        initImageData() {
+        }
+        clearScreen() {
+        }
+        fillImageData(buffer) {
+            for (var y = 0; y < Screen.physics.HEIGHT; y++) {
+                for (var x = 0; x < Screen.physics.WIDTH; x++) {
+                    //buffer[y * Screen.physics.WIDTH + x]
+                }
+            }
+        }
+        render(buffer) {
         }
     }
-};
-
-Screen.prototype.render = function(buffer) {
-
-};
-
 GameboyJS.Screen = Screen;
 }(GameboyJS || (GameboyJS = {})));
 
