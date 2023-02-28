@@ -698,15 +698,15 @@ var GameboyJS;
 (function (GameboyJS) {
 "use strict";
 
+// Screen device
+var Screen = function(canvas, pixelSize) {
+    //stubbed
+};
+
 Screen.physics = {
     WIDTH    : 160,
     HEIGHT   : 144,
     FREQUENCY: 60
-};
-
-// Screen device
-var Screen = function(canvas, pixelSize) {
-    console.log("stubbed");
 };
 
 Screen.prototype.setPixelSize = function(pixelSize){
