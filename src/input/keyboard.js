@@ -14,10 +14,14 @@ Keyboard.prototype.init = function(onPress, onRelease) {
 
     var self = this;
     document.addEventListener('keydown', function(e) {
-        self.managePress(e.keyCode);
+        if(self.managePress(e.keyCode)){
+            e.preventDefault();
+        }
     });
     document.addEventListener('keyup', function(e) {
-        self.manageRelease(e.keyCode);
+        if(self.manageRelease(e.keyCode)){
+            e.preventDefault();
+        }
     });
 }
 
@@ -25,14 +29,18 @@ Keyboard.prototype.managePress = function(keycode) {
     var key = this.translateKey(keycode);
     if (key) {
         this.onPress(key);
+        return true;
     }
+    return false;
 };
 
 Keyboard.prototype.manageRelease = function(keycode) {
     var key = this.translateKey(keycode);
     if (key) {
         this.onRelease(key);
+        return true;
     }
+    return false;
 };
 
 // Transform a keyboard keycode into a key of the Input.keys object

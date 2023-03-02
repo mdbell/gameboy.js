@@ -706,6 +706,8 @@ var GameboyJS;
             FREQUENCY: 60
         };
         static rows = [];
+        // 10 is a placeholder value, can be anything that isn't a screen color
+        static buffer = new Uint8Array(Screen.physics.WIDTH * Screen.physics.HEIGHT).fill(10); 
         constructor(canvas, pixelSize) {
             this.svg = canvas;
             Screen.rows = canvas.children;
@@ -722,10 +724,14 @@ var GameboyJS;
         static fillImageData(buffer) {
             for (var y = 0; y < Screen.physics.HEIGHT; y++) {
                 for (var x = 0; x < Screen.physics.WIDTH; x++) {
-                    let color = buffer[y * Screen.physics.WIDTH + x];
-                    let row = Screen.rows[x];
-                    let col = row.children[y];
-                    col.setAttribute('data-level', color);
+                    let idx = y * Screen.physics.WIDTH + x;
+                    let color = buffer[idx];
+                    if(color != Screen.buffer[idx]){
+                        let row = Screen.rows[x];
+                        let col = row.children[y];
+                        col.setAttribute('data-level', color);
+                        buffer[idx] = color;
+                    }
                 }
             }
         }
@@ -967,10 +973,14 @@ Keyboard.prototype.init = function(onPress, onRelease) {
 
     var self = this;
     document.addEventListener('keydown', function(e) {
-        self.managePress(e.keyCode);
+        if(self.managePress(e.keyCode)){
+            e.preventDefault();
+        }
     });
     document.addEventListener('keyup', function(e) {
-        self.manageRelease(e.keyCode);
+        if(self.manageRelease(e.keyCode)){
+            e.preventDefault();
+        }
     });
 }
 
@@ -978,14 +988,18 @@ Keyboard.prototype.managePress = function(keycode) {
     var key = this.translateKey(keycode);
     if (key) {
         this.onPress(key);
+        return true;
     }
+    return false;
 };
 
 Keyboard.prototype.manageRelease = function(keycode) {
     var key = this.translateKey(keycode);
     if (key) {
         this.onRelease(key);
+        return true;
     }
+    return false;
 };
 
 // Transform a keyboard keycode into a key of the Input.keys object
